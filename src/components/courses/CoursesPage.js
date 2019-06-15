@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import * as courseActions from "../../redux/actions/courseActions";
-import { bindActionCreators } from "C:/Users/jpjb.NNITCORP/AppData/Local/Microsoft/TypeScript/3.5/node_modules/redux";
+import { bindActionCreators } from "redux";
 class CoursesPage extends React.Component {
   state = {
     course: {
