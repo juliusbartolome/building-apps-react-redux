@@ -1,4 +1,4 @@
-import { CREATE_COURSE } from "../actions/actionTypes";
+import { CREATE_COURSE } from "../actions/courseActionTypes";
 
 export default function createCourse(state = [], action) {
   switch (action.type) {
