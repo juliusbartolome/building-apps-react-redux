@@ -26,7 +26,7 @@ const CourseList = ({ courses }) => (
           <td>
             <Link to={`/course/${course.slug}`}>{course.title}</Link>
           </td>
-          <td>{course.authorId}</td>
+          <td>{course.author ? course.author.name : ""}</td>
           <td>{course.category}</td>
         </tr>
       ))}
