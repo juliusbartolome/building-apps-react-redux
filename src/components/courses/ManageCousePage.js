@@ -23,6 +23,8 @@ const ManageCousePage = ({
       loadCourses().catch(error => {
         alert(`Loading courses failed ${error}`);
       });
+    } else {
+      setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
@@ -30,7 +32,7 @@ const ManageCousePage = ({
         alert(`Loading authors failed ${error}`);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -58,6 +60,10 @@ const ManageCousePage = ({
   );
 };
 
+export function getCourseBySlug(courses, slug) {
+  return courses.find(course => course.slug === slug) || null;
+}
+
 ManageCousePage.propTypes = {
   course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
@@ -67,11 +73,19 @@ ManageCousePage.propTypes = {
   saveCourse: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  authors: state.authors,
-  courses: state.courses,
-  course: newCourse
-});
+const mapStateToProps = (state, ownProps) => {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
+
+  return {
+    course,
+    authors: state.authors,
+    courses: state.courses
+  };
+};
 
 const mapDispatchToProps = {
   loadAuthors,

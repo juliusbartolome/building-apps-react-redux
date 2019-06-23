@@ -16,7 +16,7 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/courses" component={CoursesPage} />
-        <Route path="/courses/:slug" component={ManageCousePage} />
+        <Route path="/course/:slug" component={ManageCousePage} />
         <Route path="/course" component={ManageCousePage} />
         <Route component={PageNotFound} />
       </Switch>
