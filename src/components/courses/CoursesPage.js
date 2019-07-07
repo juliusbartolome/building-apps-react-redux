@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
+import Spinner from "../common/Spinner";
 import { bindActionCreators } from "redux";
 import CourseList from "./CourseList";
 
@@ -28,6 +30,10 @@ class CoursesPage extends React.Component {
     return (
       <>
         <h2>Courses</h2>
+        <Spinner />
+        <Link to={`/course/`} className="btn btn-primary add-course">
+          Add Course
+        </Link>
         <CourseList courses={this.props.courses} />
       </>
     );
