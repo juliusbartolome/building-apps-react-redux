@@ -1,5 +1,6 @@
 import * as authorActionTypes from "./authorActionTypes";
 import * as authorApi from "../../api/authorApi";
+import { beginApiCall } from "../../redux/actions/apiStatusActions";
 
 export function loadAuthorSuccess(authors) {
   return {
@@ -8,15 +9,14 @@ export function loadAuthorSuccess(authors) {
   };
 }
 
-export function loadAuthors() {
-  return function(dispatch) {
-    return authorApi
-      .getAuthors()
-      .then(authors => {
-        dispatch(loadAuthorSuccess(authors));
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-}
+export const loadAuthors = () => dispatch => {
+  dispatch(beginApiCall());
+  return authorApi
+    .getAuthors()
+    .then(authors => {
+      dispatch(loadAuthorSuccess(authors));
+    })
+    .catch(error => {
+      throw error;
+    });
+};

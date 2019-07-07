@@ -30,11 +30,19 @@ class CoursesPage extends React.Component {
     return (
       <>
         <h2>Courses</h2>
-        <Spinner />
-        <Link to={`/course/`} className="btn btn-primary add-course">
-          Add Course
-        </Link>
-        <CourseList courses={this.props.courses} />
+        {this.props.apiCallsInProgress > 0 && <Spinner />}
+        {this.props.apiCallsInProgress === 0 && (
+          <Link
+            style={{ marginBottom: "20px" }}
+            to={`/course/`}
+            className="btn btn-primary float-right add-course"
+          >
+            Add Course
+          </Link>
+        )}
+        {this.props.apiCallsInProgress === 0 && (
+          <CourseList courses={this.props.courses} />
+        )}
       </>
     );
   }
@@ -43,7 +51,8 @@ class CoursesPage extends React.Component {
 CoursesPage.propTypes = {
   actions: PropTypes.object.isRequired,
   courses: PropTypes.array.isRequired,
-  authors: PropTypes.array.isRequired
+  authors: PropTypes.array.isRequired,
+  apiCallsInProgress: PropTypes.number.isRequired
 };
 
 function mapsStateToProps(state) {
@@ -57,7 +66,8 @@ function mapsStateToProps(state) {
               author: state.authors.find(a => a.id === course.authorId)
             };
           }),
-    authors: state.authors
+    authors: state.authors,
+    apiCallsInProgress: state.apiCallsInProgress
   };
 }
 
