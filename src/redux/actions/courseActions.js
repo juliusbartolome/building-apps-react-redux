@@ -22,7 +22,9 @@ export const loadCourses = () => dispatch => {
   return courseApi
     .getCourses()
     .then(courses => {
-      dispatch(loadCoursesSuccess(courses));
+      setTimeout(() => {
+        dispatch(loadCoursesSuccess(courses));
+      }, 1000);
     })
     .catch(error => {
       throw error;
@@ -30,10 +32,12 @@ export const loadCourses = () => dispatch => {
 };
 
 export const saveCourse = course => dispatch => {
-  dispatch(beginApiCall);
+  dispatch(beginApiCall());
   return courseApi.saveCourse(course).then(savedCourse => {
-    course.id
-      ? dispatch(updateCourseSuccess(savedCourse))
-      : dispatch(createCourseSuccess(savedCourse));
+    setTimeout(() => {
+      course.id
+        ? dispatch(updateCourseSuccess(savedCourse))
+        : dispatch(createCourseSuccess(savedCourse));
+    }, 1000);
   });
 };

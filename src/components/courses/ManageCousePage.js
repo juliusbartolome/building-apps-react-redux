@@ -6,6 +6,7 @@ import { newCourse } from "../../../tools/mockData";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
 import CourseForm from "./CourseForm";
+import Spinner from "../common/Spinner";
 
 const ManageCousePage = ({
   authors,
@@ -17,6 +18,7 @@ const ManageCousePage = ({
 }) => {
   const [course, setCourse] = useState({ ...props.course });
   const [errors] = useState();
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -44,18 +46,21 @@ const ManageCousePage = ({
 
   function handleSave(event) {
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log("handleSave", course);
-    saveCourse(course);
+
+    setSaving(true);
+    saveCourse(course).then(() => props.history.push("/courses"));
   }
 
-  return (
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       course={course}
       errors={errors}
       authors={authors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 };
@@ -70,7 +75,8 @@ ManageCousePage.propTypes = {
   courses: PropTypes.array.isRequired,
   loadAuthors: PropTypes.func.isRequired,
   loadCourses: PropTypes.func.isRequired,
-  saveCourse: PropTypes.func.isRequired
+  saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
